@@ -1,5 +1,6 @@
 var sport = [];
 function createButton() {
+  $("#new-button").empty();
   for (var i = 0; i < sport.length; i++) {
     var newButton = $("<button>").addClass("data-sport", sport);
     newButton.attr("data-sport", sport[i]);
@@ -16,6 +17,7 @@ $("#add-sport").on("click", function(event) {
   sport.push(newSport);
   $("#sport-input").val("");
   console.log(newSport);
+  createButton();
 });
 
 $("button").on("click", function() {
