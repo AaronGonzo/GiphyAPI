@@ -2,7 +2,7 @@ var sport = [];
 function createButton() {
   $("#new-button").empty();
   for (var i = 0; i < sport.length; i++) {
-    var newButton = $("<button>").addClass("data-sport", sport);
+    var newButton = $("<button>");
     newButton.attr("data-sport", sport[i]);
     newButton.text(sport[i]);
     $("#new-button").append(newButton);
@@ -20,7 +20,7 @@ $("#add-sport").on("click", function(event) {
   createButton();
 });
 
-$("button").on("click", function() {
+$("button, #new-button").on("click", function() {
   $("#gifs-appear").empty();
   var sport = $(this).attr("data-sport");
   var queryURL =
