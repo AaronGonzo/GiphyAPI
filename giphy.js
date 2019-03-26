@@ -20,7 +20,7 @@ $("#add-sport").on("click", function(event) {
   createButton();
 });
 
-$("button, #new-button").on("click", function() {
+var handler = function() {
   $("#gifs-appear").empty();
   var sport = $(this).attr("data-sport");
   var queryURL =
@@ -44,11 +44,30 @@ $("button, #new-button").on("click", function() {
         var sportImage = $("<img>");
         var rating = results[i].rating;
         var p = $("<p>").text("Rating: " + rating);
-        sportImage.attr("src", results[i].images.fixed_height.url);
+        var attributes = {
+          src: results[i].images.fixed_height_still.url,
+          "data-still": results[i].images.fixed_height_still.url,
+          "data-animate": results[i].images.fixed_height.url
+        };
+        sportImage.attr(attributes);
         sportDiv.append(p);
         sportDiv.append(sportImage);
+        sportImage.addClass("gif");
 
         $("#gifs-appear").prepend(sportDiv);
       }
+      $(document).on("click", ".gif", function() {
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      });
     });
-});
+};
+$("#new-button").on("click", "button", handler);
+
+$("button").on("click", handler);
